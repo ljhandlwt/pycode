@@ -1,0 +1,7 @@
+1.
+vgg16多gpu在不整除的时候会出错,所以我用dataset补充重复的数据
+真正测试的时候,需要对得到的feature去重处理
+2.
+不要同时reset两个dataset,它们共享subthread,会造成线程冲突.
+正确做法是,一个dataset完全读完所有的batch,再reset另一个dataset
+至于共享subthread,是因为subthread开太多会很卡
