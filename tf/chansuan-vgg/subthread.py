@@ -111,7 +111,7 @@ if __name__ == '__main__':
         def work(self, args):
             filepath = args
             if not isinstance(filepath, str):
-                    filepath = filepath.decode()
+                filepath = filepath.decode()
             img = skimage.io.imread(filepath)
             return img
 
