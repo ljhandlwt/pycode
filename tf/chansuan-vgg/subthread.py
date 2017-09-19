@@ -4,8 +4,6 @@ from __future__ import print_function
 
 import os,sys
 import traceback
-import numpy as np
-import random
 
 import threading
 import time
@@ -103,33 +101,33 @@ class subthread(threading.Thread):
 
 
 #your code
-import skimage
-import skimage.io
-from matplotlib import pyplot as plt
-
-class MyThread(subthread):
-    def work(self, args):
-        filepath = args
-        if not isinstance(filepath, str):
-                filepath = filepath.decode()
-        img = skimage.io.imread(filepath)
-        return img
-
-    def solve_error(e):
-        return None
-
 
 if __name__ == '__main__':
+    import skimage
+    import skimage.io
+    from matplotlib import pyplot as plt
+
+    class MyThread(subthread):
+        def work(self, args):
+            filepath = args
+            if not isinstance(filepath, str):
+                    filepath = filepath.decode()
+            img = skimage.io.imread(filepath)
+            return img
+
+        def solve_error(e):
+            return None
+
     st = MyThread()
     st.start()
 
-    st.setOn(r"D:\jianheng\a.jpg")
+    st.setOn(r"a.jpg")
     while not st.isOff():
         time.sleep(0.1)
     img = st.getOff()    
 
     if img is None:
-        print("Path not valid")
+        print("Path not exist")
     else:
         skimage.io.imshow(img)
         plt.show()
