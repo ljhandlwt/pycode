@@ -24,7 +24,7 @@ class subthread(threading.Thread):
     3. main thread find `off` is still none, so sub thread is working
     4. sub thread finish and set `on` = none and set `off` = something
     5. main thread find `off` != none, so sub thread finish working
-    6. sub thread find `on` is none, and sleep... 
+    6. sub thread find `on` is none, and sleep...
     '''
     def __init__(self, args={}):
         '''
@@ -46,7 +46,7 @@ class subthread(threading.Thread):
     def setOn(self, s):
         '''
         give args and ask subthread to work
-        s: obj, args of the work 
+        s: obj, args of the work
         '''
         assert self.isOff(), 'thread is working'
         self.args['off'] = None
@@ -88,8 +88,10 @@ class subthread(threading.Thread):
     def work(self, args):
         '''
         virtual func: your work
+        note:it can't return None
         '''
         print("please rewrite this func.")
+        return 0
 
     def solve_error(self, e):
         '''
@@ -124,7 +126,7 @@ if __name__ == '__main__':
     st.setOn(r"a.jpg")
     while not st.isOff():
         time.sleep(0.1)
-    img = st.getOff()    
+    img = st.getOff()
 
     if img is None:
         print("Path not exist")
