@@ -91,7 +91,7 @@ class subthread(threading.Thread):
         '''
         print("please rewrite this func.")
 
-    def solve_error(e):
+    def solve_error(self, e):
         '''
         virtual func: how to solve error
         '''
