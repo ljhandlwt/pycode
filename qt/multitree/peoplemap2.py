@@ -80,6 +80,8 @@ class mymap(QWidget):
         note:called by Qt system
         '''
 
+        node_size = 40
+
         # decide the size of the window
         maxX=0
         minX=0
@@ -88,11 +90,11 @@ class mymap(QWidget):
             minX=min(minX,root.larr[i])
             maxX=max(maxX,root.rarr[i])
         maxdist=2*max(maxX,-minX)
-        size=QSize((maxdist+1)*30+100,(2*self.maxdeep+1)*30+100) # 30 is size of node, 100 is dist between most left(right) and the left(right) of window
+        size=QSize((maxdist+1)*node_size+100,(2*self.maxdeep+1)*node_size+100) # 100 is dist between most left(right) and the left(right) of window
         self.resize(size)
         
         # bfs
-        queue=[[self.jhtree.mname[''],size.width()/2.0,5]] # 5+2*30 is dist between root and the top of window
+        queue=[[self.jhtree.mname[''],size.width()/2.0,0]] # 2*nodesize is dist between root and the top of window
         painter=QPainter()
         painter.begin(self)
         painter.setPen(QPen(Qt.black,Qt.DashLine)) # set style of text and line
@@ -106,20 +108,20 @@ class mymap(QWidget):
             if person.name == '': # transparent root
                for i in person.son:
                    son=self.jhtree.mname[i]
-                   queue.append([son,sx+son.offset*30,sy+60])
+                   queue.append([son,sx+son.offset*node_size,sy+node_size*2])
                continue    
 
             painter.setBrush(QBrush(Qt.blue,Qt.SolidPattern)) # set style of node
-            painter.drawRect(sx-15,sy-15,30,30) # draw node
+            painter.drawRect(sx-node_size//2,sy-node_size//2,node_size,node_size) # draw node
 
-            painter.drawText(sx+15,sy-15,self.tr(person.name))
+            painter.drawText(sx+node_size//2-5,sy-node_size//2-5,self.tr(person.name)) # (-5,-5) translation
 
             if len(person.son)!=0:
-                painter.drawLine(sx,sy+15,sx,sy+30)
+                painter.drawLine(sx,sy+node_size//2,sx,sy+node_size)
                 if len(person.son)>1:
-                    painter.drawLine(sx+self.jhtree.mname[person.son[0]].offset*30,sy+30,sx+self.jhtree.mname[person.son[-1]].offset*30,sy+30) # draw the horizon line
+                    painter.drawLine(sx+self.jhtree.mname[person.son[0]].offset*node_size,sy+node_size,sx+self.jhtree.mname[person.son[-1]].offset*node_size,sy+node_size) # draw the horizon line
             for i in person.son:
                 son=self.jhtree.mname[i]
-                painter.drawLine(sx+son.offset*30,sy+30,sx+son.offset*30,sy+45) # draw vertical line
-                queue.append([son,sx+son.offset*30,sy+60])
+                painter.drawLine(sx+son.offset*node_size,sy+node_size,sx+son.offset*node_size,sy+node_size*1.5) # draw vertical line
+                queue.append([son,sx+son.offset*node_size,sy+node_size*2])
         painter.end()

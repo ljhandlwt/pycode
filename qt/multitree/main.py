@@ -23,6 +23,7 @@ import os,sys
 import peoplemap2 as peoplemap
 import peopletree2 as peopletree
 import codecs
+import argparse
 
 #support chinese
 code=QTextCodec.codecForName("utf8")
@@ -60,8 +61,12 @@ def filesave(filepath, jhtree):
 
 
 def main():
-	''' demo '''
-	jhtree = fileload('test.txt')
+	parser = argparse.ArgumentParser()
+	parser.add_argument('-f', '--file', default='test.txt', help='input tree map')
+	args = parser.parse_args()
+	filepath = args.file
+
+	jhtree = fileload(filepath)
 
 	app=QApplication(sys.argv)
 

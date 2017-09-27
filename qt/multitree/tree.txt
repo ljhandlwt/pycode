@@ -1,0 +1,14 @@
+main
+main work
+work io_read
+work make_img
+work io_save
+io_read switch_sklt
+make_img align
+make_img make_slice
+make_img calc_limit
+make_img p2d2img
+make_slice dist_p2p
+make_slice pos2p2d
+align rotate_x
+align rotate_z
